@@ -1,3 +1,4 @@
+package co.edu.umb.guide1mobileengineeringme.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
@@ -5,8 +6,6 @@ import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import co.edu.umb.guide1mobileengineeringme.ui.theme.Shapes
-import co.edu.umb.guide1mobileengineeringme.ui.theme.Typography
 
 private val DarkColorPalette = darkColors(
   primary =   BLUE900,

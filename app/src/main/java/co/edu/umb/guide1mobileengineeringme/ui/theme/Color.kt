@@ -1,3 +1,5 @@
+package co.edu.umb.guide1mobileengineeringme.ui.theme
+
 import androidx.compose.ui.graphics.Color
 
 /*
