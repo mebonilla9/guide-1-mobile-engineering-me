@@ -55,7 +55,7 @@ fun LoginScreen() {
       painter = painterResource(id = R.drawable.logo),
       contentDescription = "Login image",
       contentScale = ContentScale.Inside,
-      modifier = Modifier.padding(0.dp, 30.dp, 0.dp, 0.dp)
+      modifier = Modifier.padding(top = 30.dp)
     )
     Box(
       modifier = Modifier.fillMaxSize(),
@@ -170,7 +170,7 @@ fun LoginScreen() {
               )
               ClickableText(
                 text = buildAnnotatedString {
-                  append("Do not have an Account")
+                  append("Do not have an Account ")
                   withStyle(
                     style = SpanStyle(
                       color = MaterialTheme.colors.primary,
@@ -204,12 +204,8 @@ fun LoginScreen() {
           )
         }
       }
-
-
     }
-
   }
-
 }
 
 @Composable
