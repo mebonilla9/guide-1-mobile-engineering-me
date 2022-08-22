@@ -1,5 +1,6 @@
 package co.edu.umb.guide1mobileengineeringme.application.screen.register
 
+import android.app.Application
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.ClickableText
@@ -27,6 +28,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import co.edu.umb.guide1mobileengineeringme.application.screen.components.EventDialog
 import co.edu.umb.guide1mobileengineeringme.application.screen.components.RoundedButton
 import co.edu.umb.guide1mobileengineeringme.application.screen.components.SocialMediaButton
 import co.edu.umb.guide1mobileengineeringme.application.screen.components.TransparentTextField
@@ -34,7 +37,12 @@ import co.edu.umb.guide1mobileengineeringme.ui.theme.FACEBOOKCOLOR
 import co.edu.umb.guide1mobileengineeringme.ui.theme.GMAILCOLOR
 
 @Composable
-fun RegisterScreen() {
+fun RegisterScreen(
+  state: RegisterState,
+  onRegister: (String, String, String, String,) -> Unit,
+  onBack: () -> Unit,
+  onDismissDialog: () -> Unit
+) {
 
   val fullNameValue = remember { mutableStateOf("") }
   val emailValue = remember { mutableStateOf("") }
@@ -58,7 +66,7 @@ fun RegisterScreen() {
       ) {
         IconButton(
           onClick = {
-            //TODO("Back button")
+            onBack()
           }
         ) {
           Icon(
@@ -143,7 +151,12 @@ fun RegisterScreen() {
           keyboardActions = KeyboardActions(
             onNext = {
               focusManager.clearFocus()
-              //TODO("Registration")
+              onRegister(
+                fullNameValue.value,
+                emailValue.value,
+                passwordValue.value,
+                confirmPasswordValue.value
+              )
             }
           ),
           imeAction = ImeAction.Done,
@@ -173,9 +186,14 @@ fun RegisterScreen() {
 
         RoundedButton(
           text = "Sign up",
-          displayProgressBar = false,
+          displayProgressBar = state.displayProgressBar,
           onClick = {
-            //TODO("Register")
+            onRegister(
+              fullNameValue.value,
+              emailValue.value,
+              passwordValue.value,
+              confirmPasswordValue.value
+            )
           }
         )
 
@@ -192,7 +210,7 @@ fun RegisterScreen() {
             }
           },
           onClick = {
-            //TODO("Back")
+            onBack()
           }
         )
       }
@@ -257,11 +275,21 @@ fun RegisterScreen() {
         }
       }
     }
+
+    if(state.errorMessage != null) {
+      EventDialog(errorMessage = state.errorMessage, onDismiss = onDismissDialog)
+    }
   }
 }
 
+
 @Composable
 @Preview
-fun previewLogin() {
-  RegisterScreen()
+fun PreviewRegister(viewModel: RegisterViewModel = RegisterViewModel()) {
+  RegisterScreen(
+    state = viewModel.state.value,
+    onRegister = viewModel::register,
+    onBack = {},
+    onDismissDialog = viewModel::hideErrorDialog
+  )
 }

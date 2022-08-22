@@ -27,7 +27,7 @@ fun TransparentTextField(
   visualTransformation: VisualTransformation = VisualTransformation.None
 ) {
   TextField(
-    modifier = Modifier.fillMaxWidth(),
+    modifier = modifier.fillMaxWidth(),
     value = textFieldValue.value.take(maxChar ?: 40),
     onValueChange = { textFieldValue.value = it },
     label = {

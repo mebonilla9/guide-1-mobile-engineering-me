@@ -1,5 +1,6 @@
 package co.edu.umb.guide1mobileengineeringme.application.screen.login
 
+import android.app.AlertDialog
 import android.provider.ContactsContract
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -34,12 +35,19 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.hilt.navigation.compose.hiltViewModel
 import co.edu.umb.guide1mobileengineeringme.R
+import co.edu.umb.guide1mobileengineeringme.application.screen.components.EventDialog
 import co.edu.umb.guide1mobileengineeringme.application.screen.components.RoundedButton
 import co.edu.umb.guide1mobileengineeringme.application.screen.components.TransparentTextField
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+  state: LoginState,
+  onLogin: (String, String) -> Unit,
+  onNavigateToRegister: () -> Unit,
+  onDismissDialog: () -> Unit
+) {
 
   val emailValue = rememberSaveable { mutableStateOf("") }
   val passwordValue = rememberSaveable { mutableStateOf("") }
@@ -123,7 +131,7 @@ fun LoginScreen() {
                 keyboardActions = KeyboardActions(
                   onDone = {
                     focusManager.clearFocus()
-                    //TODO("Login")
+                    onLogin(emailValue.value, passwordValue.value)
                   }
                 ),
                 imeAction = ImeAction.Done,
@@ -163,9 +171,9 @@ fun LoginScreen() {
             ) {
               RoundedButton(
                 text = "Login",
-                displayProgressBar = false,
+                displayProgressBar = state.displayProgressBar,
                 onClick = {
-                  //TODO("Login")
+                  onLogin(emailValue.value, passwordValue.value)
                 }
               )
               ClickableText(
@@ -180,7 +188,7 @@ fun LoginScreen() {
                     append("Sign up")
                   }
                 }) {
-                // TODO("Navigate to Register Screen")
+                onNavigateToRegister()
               }
             }
           }
@@ -194,7 +202,9 @@ fun LoginScreen() {
               end.linkTo(surface.end, margin = 36.dp)
             },
           backgroundColor = MaterialTheme.colors.primary,
-          onClick = {}
+          onClick = {
+            onNavigateToRegister()
+          }
         ) {
           Icon(
             modifier = Modifier.size(42.dp),
@@ -205,11 +215,23 @@ fun LoginScreen() {
         }
       }
     }
+
+    if (state.errorMessage != null){
+      EventDialog(
+        errorMessage = state.errorMessage,
+        onDismiss = onDismissDialog
+      )
+    }
   }
 }
 
 @Composable
 @Preview
-fun previewLogin() {
-  LoginScreen()
+fun PreviewLogin(viewModel: LoginViewModel = LoginViewModel()) {
+  LoginScreen(
+    state = viewModel.state.value,
+    onLogin = viewModel::login,
+    onNavigateToRegister = {},
+    onDismissDialog = viewModel::hideErrorDialog
+  )
 }
