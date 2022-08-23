@@ -142,14 +142,28 @@ fun NavGraphBuilder.addRegister(
   ) {
     val viewModel: RegisterViewModel = hiltViewModel()
 
-    RegisterScreen(
-      state = viewModel.state.value,
-      onRegister = viewModel::register,
-      onBack = {
-        navController.popBackStack()
-      },
-      onDismissDialog = viewModel::hideErrorDialog
-    )
+    if (viewModel.state.value.successRegister) {
+      LaunchedEffect(
+        key1 = Unit
+      ) {
+        navController.navigate(
+          Routes.Login.route
+        )/* {
+          popUpTo(Routes.Login.route) {
+            inclusive = true
+          }
+        }*/
+      }
+    } else {
+      RegisterScreen(
+        state = viewModel.state.value,
+        onRegister = viewModel::register,
+        onBack = {
+          navController.popBackStack()
+        },
+        onDismissDialog = viewModel::hideErrorDialog
+      )
+    }
   }
 }
 

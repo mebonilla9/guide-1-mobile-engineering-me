@@ -42,10 +42,10 @@ fun RegisterScreen(
   onDismissDialog: () -> Unit
 ) {
 
-  val fullNameValue = remember { mutableStateOf("") }
-  val emailValue = remember { mutableStateOf("") }
-  val passwordValue = remember { mutableStateOf("") }
-  val confirmPasswordValue = remember { mutableStateOf("") }
+  val fullNameValue = remember { mutableStateOf("Manuel Bonilla") }
+  val emailValue = remember { mutableStateOf("mail2@mail.com") }
+  val passwordValue = remember { mutableStateOf("Test@123") }
+  val confirmPasswordValue = remember { mutableStateOf("Test@123") }
   val focusManager = LocalFocusManager.current
   var passwordVisibility by remember { mutableStateOf(false) }
   var confirmPasswordVisibility by remember { mutableStateOf(false) }
@@ -187,8 +187,8 @@ fun RegisterScreen(
           displayProgressBar = state.displayProgressBar,
           onClick = {
             onRegister(
-              fullNameValue.value,
               emailValue.value,
+              fullNameValue.value,
               passwordValue.value,
               confirmPasswordValue.value
             )
