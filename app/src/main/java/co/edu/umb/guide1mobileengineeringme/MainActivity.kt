@@ -32,7 +32,6 @@ class MainActivity : ComponentActivity() {
     setContent {
       Guide1MobileEngineeringMETheme {
         val navController = rememberAnimatedNavController()
-
         BoxWithConstraints {
           AnimatedNavHost(
             navController = navController,
@@ -40,7 +39,7 @@ class MainActivity : ComponentActivity() {
           ) {
             addLogin(navController)
             addRegister(navController)
-            addHome()
+            addHome(navController)
           }
         }
       }
@@ -81,14 +80,14 @@ fun NavGraphBuilder.addLogin(
   ) {
     val viewModel: LoginViewModel = hiltViewModel()
     val email = viewModel.state.value.email
-    val password = viewModel.state.value.password
+    val token = viewModel.state.value.token?.token
 
     if (viewModel.state.value.successLogin) {
       LaunchedEffect(
         key1 = Unit
       ) {
         navController.navigate(
-          Routes.Home.route + "/$email" + "/$password"
+          Routes.Home.route + "/$email" + "/$token"
         ) {
           popUpTo(Routes.Login.route) {
             inclusive = true
@@ -155,16 +154,18 @@ fun NavGraphBuilder.addRegister(
 }
 
 @ExperimentalAnimationApi
-fun NavGraphBuilder.addHome() {
+fun NavGraphBuilder.addHome(
+  navController: NavController
+) {
   composable(
-    route = Routes.Register.route + "/{email}" + "/{password}",
+    route = Routes.Home.route + "/{email}" + "/{token}",
     arguments = Routes.Home.arguments
   ) { backStackEntry ->
 
     val email = backStackEntry.arguments?.getString("email") ?: ""
-    val password = backStackEntry.arguments?.getString("password") ?: ""
+    val token = backStackEntry.arguments?.getString("token") ?: ""
     HomeScreen(
-      email,password
+      email, token, onBack = { navController.navigate(Routes.Login.route) }
     )
   }
 }

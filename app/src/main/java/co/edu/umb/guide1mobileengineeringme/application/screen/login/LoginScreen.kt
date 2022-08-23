@@ -1,6 +1,7 @@
 package co.edu.umb.guide1mobileengineeringme.application.screen.login
 
 import android.app.AlertDialog
+import android.content.SharedPreferences
 import android.provider.ContactsContract
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -49,8 +50,8 @@ fun LoginScreen(
   onDismissDialog: () -> Unit
 ) {
 
-  val emailValue = rememberSaveable { mutableStateOf("") }
-  val passwordValue = rememberSaveable { mutableStateOf("") }
+  val emailValue = rememberSaveable { mutableStateOf("mail2@mail.com") }
+  val passwordValue = rememberSaveable { mutableStateOf("Test@123!") }
   var passwordVisibility by remember { mutableStateOf(false) }
   val focusManager = LocalFocusManager.current
 

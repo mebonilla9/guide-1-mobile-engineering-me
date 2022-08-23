@@ -1,6 +1,5 @@
 package co.edu.umb.guide1mobileengineeringme.application.screen.register
 
-import android.app.Application
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.ClickableText
@@ -28,7 +27,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import co.edu.umb.guide1mobileengineeringme.application.screen.components.EventDialog
 import co.edu.umb.guide1mobileengineeringme.application.screen.components.RoundedButton
 import co.edu.umb.guide1mobileengineeringme.application.screen.components.SocialMediaButton

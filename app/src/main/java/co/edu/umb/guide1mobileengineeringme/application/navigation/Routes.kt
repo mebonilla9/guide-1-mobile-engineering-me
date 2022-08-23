@@ -3,6 +3,7 @@ package co.edu.umb.guide1mobileengineeringme.application.navigation
 import androidx.navigation.NavType
 import androidx.navigation.compose.NamedNavArgument
 import androidx.navigation.compose.navArgument
+import co.edu.umb.guide1mobileengineeringme.domain.dto.TokenDto
 
 sealed class Routes(
   val route: String,
@@ -15,7 +16,7 @@ sealed class Routes(
     "home",
     listOf(
       navArgument("email") { type = NavType.StringType },
-      navArgument("password") { type = NavType.StringType }
+      navArgument("token") { type = NavType.StringType }
     )
   )
 
